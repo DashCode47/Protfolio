@@ -141,8 +141,8 @@ export const experience = [
 ];
 
 export const socialLinks = {
-  linkedin: "#",
-  github: "#",
-  twitter: "#"
+  linkedin: "https://www.linkedin.com/in/david-lozada471/",
+  instagram: "https://instagram.com/davsh47",
+  github: "https://github.com/DashCode47"
 };
 
