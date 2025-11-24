@@ -11,6 +11,7 @@ export const translations = {
       subtitle: 'Desarrollador Full-Stack & Consultor Técnico',
       description: 'Consultor técnico dinámico y orientado a resultados con más de 5 años de experiencia entregando soluciones IT innovadoras en los sectores gubernamental y financiero. Experiencia comprobada en arquitectura de sistemas, desarrollo de software y gestión de proyectos, complementada con una sólida base en ingeniería de software y dominio en React y React Native. Comprometido con fomentar la colaboración en equipo y adaptarse a las necesidades cambiantes de los proyectos mientras impulsa iniciativas de mejora continua.',
       contactButton: 'Contacta conmigo',
+      downloadCV: 'Descargar CV',
     },
     skills: {
       title: 'Habilidades Técnicas',
@@ -90,6 +91,7 @@ export const translations = {
       subtitle: 'Full-Stack Developer & Technical Consultant',
       description: 'Dynamic and results-driven technical consultant with over 5 years of experience delivering innovative IT solutions in the government and financial sectors. Proven expertise in systems architecture, software development, and project management, complemented by a strong foundation in software engineering with proficiency in React and React Native. Committed to fostering team collaboration and adapting to evolving project needs while consistently driving continuous improvement initiatives.',
       contactButton: 'Contact Me',
+      downloadCV: 'Download CV',
     },
     skills: {
       title: 'Technical Skills',

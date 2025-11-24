@@ -2,6 +2,7 @@ import React from 'react';
 import { personalInfo } from '../data/personalInfo';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../translations/translations';
+import cvPdf from '../assets/cv.pdf';
 
 const Hero = () => {
   const { language } = useLanguage();
@@ -32,12 +33,22 @@ const Hero = () => {
               {t.hero.description}
             </h2>
           </div>
-          <a 
-            className="flex min-w-[84px] max-w-xs cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 @[480px]:h-12 @[480px]:px-5 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base @[480px]:font-bold @[480px]:leading-normal @[480px]:tracking-[0.015em] mx-auto @[864px]:mx-0" 
-            href="#contacto"
-          >
-            <span className="truncate">{t.hero.contactButton}</span>
-          </a>
+          <div className="flex flex-col sm:flex-row gap-3 mx-auto @[864px]:mx-0">
+            <a 
+              className="flex min-w-[84px] max-w-xs cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 @[480px]:h-12 @[480px]:px-5 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base @[480px]:font-bold @[480px]:leading-normal @[480px]:tracking-[0.015em]" 
+              href="#contacto"
+            >
+              <span className="truncate">{t.hero.contactButton}</span>
+            </a>
+            <a 
+              className="flex min-w-[84px] max-w-xs cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg h-10 px-4 @[480px]:h-12 @[480px]:px-5 border-2 border-primary text-primary bg-transparent hover:bg-primary hover:text-white text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base @[480px]:font-bold @[480px]:leading-normal @[480px]:tracking-[0.015em] transition-colors" 
+              href={cvPdf}
+              download="David-Lozada-CV.pdf"
+            >
+              <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>download</span>
+              <span className="truncate">{t.hero.downloadCV}</span>
+            </a>
+          </div>
         </div>
       </div>
     </section>
