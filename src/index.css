@@ -81,6 +81,22 @@ a, button {
   }
 }
 
+/* Hero description animations */
+.hero-description {
+  will-change: transform, opacity;
+}
+
+.hero-word {
+  will-change: transform, opacity;
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+.hero-word:hover {
+  transform: translateY(-2px);
+  color: rgb(59, 130, 246);
+}
+
 /* Dark mode adjustments for hero image */
 .dark .hero-gradient-border {
   opacity: 0.4;
@@ -88,5 +104,9 @@ a, button {
 
 .dark .hero-image-container {
   box-shadow: 0 0 30px rgba(59, 130, 246, 0.4), 0 0 60px rgba(139, 92, 246, 0.3) !important;
+}
+
+.dark .hero-word:hover {
+  color: rgb(96, 165, 250);
 }
 

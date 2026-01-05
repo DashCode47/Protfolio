@@ -99,18 +99,51 @@ const Hero = () => {
       });
     }
 
-    // Animate description
+    // Animate description with stunning word-by-word reveal
     if (descriptionRef.current) {
-      anime(descriptionRef.current, {
+      const description = descriptionRef.current;
+      
+      // Store original text to restore if needed
+      const originalText = t.hero.description;
+      
+      // Split text into words and wrap each word in a span
+      const words = originalText.split(' ');
+      description.innerHTML = words.map((word) => 
+        `<span class="hero-word" style="opacity: 0; display: inline-block;">${word}</span>`
+      ).join(' ');
+
+      // Animate each word with stagger - eye-catching reveal
+      const wordElements = description.querySelectorAll('.hero-word');
+      anime(wordElements, {
         opacity: [0, 1],
         translateY: [20, 0],
-        duration: 800,
+        scale: [0.8, 1],
+        duration: 600,
         easing: 'easeOutExpo',
-        delay: 600,
+        delay: stagger(30, { start: 700 }),
       });
-    }
 
-    // Animate buttons with stagger
+      // Add continuous subtle animation after initial reveal
+      setTimeout(() => {
+        // Subtle fade pulse effect on random words for dynamic feel
+        const randomWords = Array.from(wordElements).sort(() => 0.5 - Math.random()).slice(0, Math.floor(wordElements.length / 4));
+        
+        anime({
+          targets: randomWords,
+          opacity: [1, 0.7, 1],
+          scale: [1, 1.05, 1],
+          duration: 2000,
+          easing: 'easeInOutSine',
+          direction: 'alternate',
+          loop: true,
+          delay: stagger(200),
+        });
+      }, 2000);
+    }
+  }, [language, t.hero.description]);
+
+  // Animate buttons with stagger
+  useEffect(() => {
     if (buttonsRef.current) {
       const buttons = buttonsRef.current.children;
       anime(buttons, {
@@ -185,7 +218,10 @@ const Hero = () => {
             </h1>
             <h2 
               ref={descriptionRef}
-              className="text-gray-600 dark:text-gray-400 text-base font-normal leading-normal @[480px]:text-lg @[480px]:font-normal @[480px]:leading-relaxed opacity-0"
+              className="text-gray-600 dark:text-gray-400 text-base font-normal leading-normal @[480px]:text-lg @[480px]:font-normal @[480px]:leading-relaxed hero-description"
+              style={{
+                textShadow: '0 0 0px rgba(59, 130, 246, 0)',
+              }}
             >
               {t.hero.description}
             </h2>
