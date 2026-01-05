@@ -15,3 +15,78 @@ body {
   @apply bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-300;
 }
 
+/* Performance optimizations for animations */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Enable hardware acceleration for animated elements */
+.skill-card,
+.project-card,
+.timeline-item,
+.timeline-dot {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Smooth transitions */
+a, button {
+  transition: transform 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+}
+
+/* Hero image stunning animations */
+.hero-image-container {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.hero-gradient-border {
+  will-change: background-position;
+  animation: gradientRotate 8s ease infinite;
+}
+
+.hero-shimmer {
+  animation: shimmer 3s infinite;
+}
+
+@keyframes gradientRotate {
+  0% {
+    background-position: 0% 50%;
+    opacity: 0.6;
+  }
+  50% {
+    background-position: 100% 50%;
+    opacity: 0.8;
+  }
+  100% {
+    background-position: 0% 50%;
+    opacity: 0.6;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    background-position: 200% 0;
+    opacity: 0;
+  }
+}
+
+/* Dark mode adjustments for hero image */
+.dark .hero-gradient-border {
+  opacity: 0.4;
+}
+
+.dark .hero-image-container {
+  box-shadow: 0 0 30px rgba(59, 130, 246, 0.4), 0 0 60px rgba(139, 92, 246, 0.3) !important;
+}
+

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { animate as anime } from 'animejs';
 import { projects } from '../data/personalInfo';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../translations/translations';
@@ -11,6 +12,9 @@ const ProjectCarousel = () => {
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
   const carouselRef = useRef(null);
+  const sectionRef = useRef(null);
+  const titleRef = useRef(null);
+  const slidesRef = useRef(null);
 
   useEffect(() => {
     const updateItemsPerView = () => {
@@ -26,18 +30,97 @@ const ProjectCarousel = () => {
     return () => window.removeEventListener('resize', updateItemsPerView);
   }, []);
 
+  useEffect(() => {
+    if (!sectionRef.current) return;
+
+    // Animate title
+    if (titleRef.current) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              anime(entry.target, {
+                opacity: [0, 1],
+                translateX: [-30, 0],
+                duration: 600,
+                easing: 'easeOutExpo',
+              });
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
+      observer.observe(titleRef.current);
+    }
+
+    // Animate project cards on scroll
+    if (slidesRef.current) {
+      const cards = slidesRef.current.querySelectorAll('.project-card');
+      const cardObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              anime(entry.target, {
+                opacity: [0, 1],
+                scale: [0.9, 1],
+                translateY: [30, 0],
+                duration: 700,
+                easing: 'easeOutExpo',
+              });
+              cardObserver.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
+
+      cards.forEach((card) => cardObserver.observe(card));
+
+      return () => {
+        cards.forEach((card) => cardObserver.unobserve(card));
+      };
+    }
+  }, []);
+
   const maxIndex = Math.max(0, projects.length - itemsPerView);
 
   const goToNext = () => {
-    setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
+    setCurrentIndex((prev) => {
+      const next = prev >= maxIndex ? 0 : prev + 1;
+      animateSlideChange(next);
+      return next;
+    });
   };
 
   const goToPrev = () => {
-    setCurrentIndex((prev) => (prev <= 0 ? maxIndex : prev - 1));
+    setCurrentIndex((prev) => {
+      const next = prev <= 0 ? maxIndex : prev - 1;
+      animateSlideChange(next);
+      return next;
+    });
   };
 
   const goToSlide = (index) => {
-    setCurrentIndex(Math.min(index, maxIndex));
+    const targetIndex = Math.min(index, maxIndex);
+    animateSlideChange(targetIndex);
+    setCurrentIndex(targetIndex);
+  };
+
+  const animateSlideChange = (newIndex) => {
+    if (slidesRef.current) {
+      const cards = slidesRef.current.querySelectorAll('.project-card');
+      cards.forEach((card, index) => {
+        if (index >= newIndex && index < newIndex + itemsPerView) {
+          anime(card, {
+            scale: [0.95, 1],
+            opacity: [0.7, 1],
+            duration: 400,
+            easing: 'easeOutExpo',
+          });
+        }
+      });
+    }
   };
 
   // Touch handlers for swipe
@@ -67,8 +150,11 @@ const ProjectCarousel = () => {
   };
 
   return (
-    <section id="proyectos">
-      <h2 className="text-gray-900 dark:text-white text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">
+    <section id="proyectos" ref={sectionRef}>
+      <h2 
+        ref={titleRef}
+        className="text-gray-900 dark:text-white text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5 opacity-0"
+      >
         {t.projects.title}
       </h2>
       
@@ -82,7 +168,8 @@ const ProjectCarousel = () => {
           onTouchEnd={onTouchEnd}
         >
           <div
-            className="flex transition-transform duration-500 ease-in-out"
+            ref={slidesRef}
+            className="flex transition-transform duration-700 ease-out"
             style={{
               transform: `translateX(-${currentIndex * (100 / itemsPerView)}%)`,
             }}
@@ -93,7 +180,7 @@ const ProjectCarousel = () => {
                 className="flex-shrink-0 px-3"
                 style={{ width: `${100 / itemsPerView}%` }}
               >
-                <div className="flex flex-col gap-4 rounded-lg border border-gray-200 dark:border-[#324d67] bg-white dark:bg-[#192633] p-4 overflow-hidden h-full">
+                <div className="project-card flex flex-col gap-4 rounded-lg border border-gray-200 dark:border-[#324d67] bg-white dark:bg-[#192633] p-4 overflow-hidden h-full opacity-0 hover:scale-[1.02] transition-transform">
                   <div className="w-full aspect-video bg-cover bg-center rounded overflow-hidden">
                     <img
                       src={project.image}
@@ -177,7 +264,7 @@ const ProjectCarousel = () => {
           <>
             <button
               onClick={goToPrev}
-              className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-10 bg-white dark:bg-[#192633] border border-gray-200 dark:border-[#324d67] rounded-full p-2 shadow-lg hover:bg-gray-50 dark:hover:bg-[#233648] transition-colors active:scale-95"
+              className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-10 bg-white dark:bg-[#192633] border border-gray-200 dark:border-[#324d67] rounded-full p-2 shadow-lg hover:bg-gray-50 dark:hover:bg-[#233648] transition-all hover:scale-110 active:scale-95"
               aria-label={t.projects.proyectoAnterior}
             >
               <span className="material-symbols-outlined text-gray-700 dark:text-gray-300 text-xl">
@@ -186,7 +273,7 @@ const ProjectCarousel = () => {
             </button>
             <button
               onClick={goToNext}
-              className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-10 bg-white dark:bg-[#192633] border border-gray-200 dark:border-[#324d67] rounded-full p-2 shadow-lg hover:bg-gray-50 dark:hover:bg-[#233648] transition-colors active:scale-95"
+              className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-10 bg-white dark:bg-[#192633] border border-gray-200 dark:border-[#324d67] rounded-full p-2 shadow-lg hover:bg-gray-50 dark:hover:bg-[#233648] transition-all hover:scale-110 active:scale-95"
               aria-label={t.projects.siguienteProyecto}
             >
               <span className="material-symbols-outlined text-gray-700 dark:text-gray-300 text-xl">

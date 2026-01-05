@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { animate as anime } from 'animejs';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Skills from './components/Skills';
@@ -8,6 +9,15 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 
 function App() {
+  useEffect(() => {
+    // Smooth page load animation
+    anime('body', {
+      opacity: [0, 1],
+      duration: 500,
+      easing: 'easeOutExpo',
+    });
+  }, []);
+
   return (
     <div className="relative flex w-full flex-col group/design-root overflow-x-hidden">
       <div className="layout-container flex h-full grow flex-col">

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import { animate as anime, stagger } from 'animejs';
 import { personalInfo, socialLinks } from '../data/personalInfo';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../translations/translations';
@@ -7,18 +8,67 @@ const Footer = () => {
   const { language } = useLanguage();
   const t = translations[language];
   const currentYear = new Date().getFullYear();
-  
+  const footerRef = useRef(null);
+  const socialIconsRef = useRef(null);
+
+  useEffect(() => {
+    if (!footerRef.current) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Animate footer text
+            const text = entry.target.querySelector('p');
+            if (text) {
+              anime(text, {
+                opacity: [0, 1],
+                translateY: [20, 0],
+                duration: 600,
+                easing: 'easeOutExpo',
+              });
+            }
+
+            // Animate social icons
+            if (socialIconsRef.current) {
+              const icons = socialIconsRef.current.querySelectorAll('a');
+              anime(icons, {
+                opacity: [0, 1],
+                scale: [0, 1],
+                rotate: [180, 0],
+                duration: 500,
+                easing: 'easeOutBack',
+                delay: stagger(80, { start: 200 }),
+              });
+            }
+
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(footerRef.current);
+
+    return () => {
+      if (footerRef.current) {
+        observer.unobserve(footerRef.current);
+      }
+    };
+  }, []);
+
   return (
-    <footer className="w-full py-6 mt-16 border-t border-gray-200 dark:border-[#233648]">
+    <footer ref={footerRef} className="w-full py-6 mt-16 border-t border-gray-200 dark:border-[#233648]">
       <div className="max-w-5xl mx-auto px-4 md:px-10">
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-gray-500 dark:text-gray-400 text-center md:text-left">
+          <p className="text-sm text-gray-500 dark:text-gray-400 text-center md:text-left opacity-0">
             © {currentYear} {personalInfo.name}. {t.footer.rights}
           </p>
-          <div className="flex justify-center gap-6">
+          <div ref={socialIconsRef} className="flex justify-center gap-6">
             {socialLinks.linkedin && socialLinks.linkedin !== '#' && (
               <a 
-                className="text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-primary transition-colors" 
+                className="text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-primary transition-colors opacity-0 hover:scale-125 inline-block" 
                 aria-label="Perfil de LinkedIn" 
                 href={socialLinks.linkedin}
                 target="_blank"
@@ -33,7 +83,7 @@ const Footer = () => {
             )}
             {socialLinks.instagram && socialLinks.instagram !== '#' && (
               <a 
-                className="text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-primary transition-colors" 
+                className="text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-primary transition-colors opacity-0 hover:scale-125 inline-block" 
                 aria-label="Perfil de Instagram" 
                 href={socialLinks.instagram}
                 target="_blank"
@@ -48,7 +98,7 @@ const Footer = () => {
             )}
             {socialLinks.github && socialLinks.github !== '#' && (
               <a 
-                className="text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-primary transition-colors" 
+                className="text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-primary transition-colors opacity-0 hover:scale-125 inline-block" 
                 aria-label="Perfil de GitHub" 
                 href={socialLinks.github}
                 target="_blank"

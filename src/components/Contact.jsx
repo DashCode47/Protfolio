@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { animate as anime, stagger } from 'animejs';
 import { socialLinks } from '../data/personalInfo';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../translations/translations';
@@ -6,6 +7,10 @@ import { translations } from '../translations/translations';
 const Contact = () => {
   const { language } = useLanguage();
   const t = translations[language];
+  const sectionRef = useRef(null);
+  const titleRef = useRef(null);
+  const formRef = useRef(null);
+  const socialIconsRef = useRef(null);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -28,20 +33,98 @@ const Contact = () => {
     });
   };
 
+  useEffect(() => {
+    if (!sectionRef.current) return;
+
+    // Animate title
+    if (titleRef.current) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              anime(entry.target, {
+                opacity: [0, 1],
+                translateY: [-20, 0],
+                duration: 600,
+                easing: 'easeOutExpo',
+              });
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
+      observer.observe(titleRef.current);
+    }
+
+    // Animate form
+    if (formRef.current) {
+      const formObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const inputs = entry.target.querySelectorAll('input, textarea, button');
+              anime(inputs, {
+                opacity: [0, 1],
+                translateY: [20, 0],
+                duration: 600,
+                easing: 'easeOutExpo',
+                delay: stagger(100, { start: 200 }),
+              });
+              formObserver.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
+      formObserver.observe(formRef.current);
+    }
+
+    // Animate social icons
+    if (socialIconsRef.current) {
+      const iconsObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const icons = entry.target.querySelectorAll('a');
+              anime(icons, {
+                opacity: [0, 1],
+                scale: [0, 1],
+                rotate: [180, 0],
+                duration: 600,
+                easing: 'easeOutBack',
+                delay: stagger(100, { start: 400 }),
+              });
+              iconsObserver.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
+      iconsObserver.observe(socialIconsRef.current);
+    }
+  }, []);
+
   return (
-    <section className="text-center p-4" id="contacto">
-      <h2 className="text-gray-900 dark:text-white text-[22px] font-bold leading-tight tracking-[-0.015em] pb-3 pt-5">
+    <section className="text-center p-4" id="contacto" ref={sectionRef}>
+      <h2 
+        ref={titleRef}
+        className="text-gray-900 dark:text-white text-[22px] font-bold leading-tight tracking-[-0.015em] pb-3 pt-5 opacity-0"
+      >
         {t.contact.title}
       </h2>
       <p className="text-gray-600 dark:text-gray-400 mb-8 max-w-lg mx-auto">
         {t.contact.description}
       </p>
-      <div className="max-w-md mx-auto bg-white dark:bg-[#192633] p-6 rounded-lg border border-gray-200 dark:border-[#324d67]">
+      <div 
+        ref={formRef}
+        className="max-w-md mx-auto bg-white dark:bg-[#192633] p-6 rounded-lg border border-gray-200 dark:border-[#324d67]"
+      >
         <form action="#" className="space-y-4" method="POST" onSubmit={handleSubmit}>
           <div>
             <label className="sr-only" htmlFor="name">{t.contact.name}</label>
             <input 
-              className="w-full rounded border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-primary focus:border-primary px-3 py-2" 
+              className="w-full rounded border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-primary focus:border-primary px-3 py-2 opacity-0 transition-all focus:scale-[1.02]" 
               id="name" 
               name="name" 
               placeholder={t.contact.name} 
@@ -54,7 +137,7 @@ const Contact = () => {
           <div>
             <label className="sr-only" htmlFor="email">{t.contact.email}</label>
             <input 
-              className="w-full rounded border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-primary focus:border-primary px-3 py-2" 
+              className="w-full rounded border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-primary focus:border-primary px-3 py-2 opacity-0 transition-all focus:scale-[1.02]" 
               id="email" 
               name="email" 
               placeholder={t.contact.email} 
@@ -67,7 +150,7 @@ const Contact = () => {
           <div>
             <label className="sr-only" htmlFor="message">{t.contact.message}</label>
             <textarea 
-              className="w-full rounded border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-primary focus:border-primary px-3 py-2" 
+              className="w-full rounded border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-primary focus:border-primary px-3 py-2 opacity-0 transition-all focus:scale-[1.02]" 
               id="message" 
               name="message" 
               placeholder={t.contact.message} 
@@ -78,17 +161,17 @@ const Contact = () => {
             ></textarea>
           </div>
           <button 
-            className="w-full flex items-center justify-center rounded-lg h-12 px-5 bg-primary text-white text-base font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors" 
+            className="w-full flex items-center justify-center rounded-lg h-12 px-5 bg-primary text-white text-base font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors opacity-0 hover:scale-105" 
             type="submit"
           >
             <span className="truncate">{t.contact.sendButton}</span>
           </button>
         </form>
       </div>
-      <div className="flex justify-center gap-6 mt-8">
+      <div ref={socialIconsRef} className="flex justify-center gap-6 mt-8">
         {socialLinks.linkedin && socialLinks.linkedin !== '#' && (
           <a 
-            className="text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-primary transition-colors" 
+            className="text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-primary transition-colors opacity-0 hover:scale-125 inline-block" 
             aria-label="Perfil de LinkedIn" 
             href={socialLinks.linkedin}
             target="_blank"
@@ -103,7 +186,7 @@ const Contact = () => {
         )}
         {socialLinks.instagram && socialLinks.instagram !== '#' && (
           <a 
-            className="text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-primary transition-colors" 
+            className="text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-primary transition-colors opacity-0 hover:scale-125 inline-block" 
             aria-label="Perfil de Instagram" 
             href={socialLinks.instagram}
             target="_blank"
@@ -118,7 +201,7 @@ const Contact = () => {
         )}
         {socialLinks.github && socialLinks.github !== '#' && (
           <a 
-            className="text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-primary transition-colors" 
+            className="text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-primary transition-colors opacity-0 hover:scale-125 inline-block" 
             aria-label="Perfil de GitHub" 
             href={socialLinks.github}
             target="_blank"
