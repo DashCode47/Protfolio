@@ -44,8 +44,11 @@ a, button {
 }
 
 .hero-gradient-border {
-  will-change: background-position;
+  will-change: background, background-position;
+  transform: translateZ(0);
+  backface-visibility: hidden;
   animation: gradientRotate 8s ease infinite;
+  transition: opacity 0.3s ease;
 }
 
 .hero-shimmer {

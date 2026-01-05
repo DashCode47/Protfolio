@@ -12,6 +12,8 @@ const Hero = () => {
   const titleRef = useRef(null);
   const descriptionRef = useRef(null);
   const buttonsRef = useRef(null);
+  const borderContainerRef = useRef(null);
+  const heroSectionRef = useRef(null);
 
   useEffect(() => {
     // Animate profile image with stunning entrance
@@ -142,6 +144,136 @@ const Hero = () => {
     }
   }, [language, t.hero.description]);
 
+  // Mouse tracking effect for gradient border - Interactive and fluid (works even outside container)
+  useEffect(() => {
+    if (borderContainerRef.current && heroSectionRef.current) {
+      const borderContainer = borderContainerRef.current;
+      const gradientBorder = borderContainer.querySelector('.hero-gradient-border');
+      const section = heroSectionRef.current;
+      
+      if (gradientBorder) {
+        let currentX = 50;
+        let currentY = 50;
+        let targetX = 50;
+        let targetY = 50;
+        let animationId = null;
+        let isActive = false;
+
+        const updateGradient = () => {
+          // Smooth interpolation for fluid movement
+          currentX += (targetX - currentX) * 0.2;
+          currentY += (targetY - currentY) * 0.2;
+          
+          // Check if we need to continue animating
+          const diffX = Math.abs(targetX - currentX);
+          const diffY = Math.abs(targetY - currentY);
+          
+          // Calculate dynamic colors based on mouse position
+          const hue = (currentX / 100) * 360;
+          const saturation = 70 + (currentY / 100) * 20;
+          const lightness = 55 + Math.sin(currentX / 25) * 10;
+          
+          // Create vibrant gradient colors that change with position
+          const color1 = `hsl(${Math.round(hue)}, ${Math.round(saturation)}%, ${Math.round(lightness)}%)`;
+          const color2 = `hsl(${Math.round((hue + 90) % 360)}, ${Math.round(saturation + 15)}%, ${Math.round(lightness + 8)}%)`;
+          const color3 = `hsl(${Math.round((hue + 180) % 360)}, ${Math.round(saturation)}%, ${Math.round(lightness)}%)`;
+          const color4 = `hsl(${Math.round((hue + 270) % 360)}, ${Math.round(saturation - 10)}%, ${Math.round(lightness - 8)}%)`;
+          
+          // Calculate angle based on mouse position for dynamic rotation
+          const angle = Math.atan2(currentY - 50, currentX - 50) * (180 / Math.PI) + 90;
+          
+          // Update gradient directly for immediate visual feedback
+          const gradientString = `linear-gradient(${angle}deg, ${color1}, ${color2}, ${color3}, ${color4})`;
+          gradientBorder.style.background = gradientString;
+          gradientBorder.style.backgroundPosition = `${currentX}% ${currentY}%`;
+          
+          // Continue animation if still moving or active
+          if ((diffX > 0.5 || diffY > 0.5) && isActive) {
+            animationId = requestAnimationFrame(updateGradient);
+          } else {
+            animationId = null;
+          }
+        };
+
+        const handleMouseMove = (e) => {
+          const borderRect = borderContainer.getBoundingClientRect();
+          const sectionRect = section.getBoundingClientRect();
+          
+          // Calculate mouse position relative to border container (even if outside)
+          const mouseX = e.clientX - borderRect.left;
+          const mouseY = e.clientY - borderRect.top;
+          
+          // Calculate position as percentage (0-100), allow values outside 0-100 for extended effect
+          let calculatedX = (mouseX / borderRect.width) * 100;
+          let calculatedY = (mouseY / borderRect.height) * 100;
+          
+          // Check if mouse is within section bounds
+          const isInSection = 
+            e.clientX >= sectionRect.left && 
+            e.clientX <= sectionRect.right &&
+            e.clientY >= sectionRect.top && 
+            e.clientY <= sectionRect.bottom;
+          
+          if (isInSection) {
+            isActive = true;
+            // Map to 0-100 range but allow some extension beyond bounds for smoother effect
+            targetX = Math.max(-20, Math.min(120, calculatedX));
+            targetY = Math.max(-20, Math.min(120, calculatedY));
+            
+            // Start animation loop if not already running
+            if (!animationId) {
+              updateGradient();
+            }
+          }
+        };
+
+        const handleMouseLeave = () => {
+          isActive = false;
+          // Smoothly return to center and default colors
+          targetX = 50;
+          targetY = 50;
+          
+          // Continue animation to return to center
+          if (!animationId) {
+            const returnToCenter = () => {
+              currentX += (targetX - currentX) * 0.1;
+              currentY += (targetY - currentY) * 0.1;
+              
+              const diffX = Math.abs(targetX - currentX);
+              const diffY = Math.abs(targetY - currentY);
+              
+              // Gradually return to default gradient
+              const defaultGradient = 'linear-gradient(45deg, #3b82f6, #8b5cf6, #ec4899, #f59e0b, #3b82f6)';
+              
+              if (diffX > 1 || diffY > 1) {
+                gradientBorder.style.background = defaultGradient;
+                gradientBorder.style.backgroundPosition = `${currentX}% ${currentY}%`;
+                animationId = requestAnimationFrame(returnToCenter);
+              } else {
+                gradientBorder.style.background = defaultGradient;
+                gradientBorder.style.backgroundPosition = '50% 50%';
+                animationId = null;
+              }
+            };
+            returnToCenter();
+          }
+        };
+
+        // Listen to mouse movement on the entire section, not just the container
+        section.addEventListener('mousemove', handleMouseMove);
+        section.addEventListener('mouseleave', handleMouseLeave);
+
+        return () => {
+          section.removeEventListener('mousemove', handleMouseMove);
+          section.removeEventListener('mouseleave', handleMouseLeave);
+          if (animationId) {
+            cancelAnimationFrame(animationId);
+          }
+        };
+      }
+    }
+  }, []);
+
   // Animate buttons with stagger
   useEffect(() => {
     if (buttonsRef.current) {
@@ -158,11 +290,15 @@ const Hero = () => {
   }, []);
 
   return (
-    <section className="@container pt-10" id="inicio">
+    <section ref={heroSectionRef} className="@container pt-10" id="inicio">
       <div className="flex flex-col gap-6 px-4 py-10 @[480px]:gap-8 @[864px]:flex-row-reverse @[864px]:items-center">
         <div className="w-full max-w-xs mx-auto @[864px]:w-1/3">
-          <div className="relative inline-block w-full" style={{ padding: '4px' }}>
-            {/* Rotating gradient border */}
+          <div 
+            ref={borderContainerRef}
+            className="relative inline-block w-full" 
+            style={{ padding: '4px', cursor: 'pointer' }}
+          >
+            {/* Rotating gradient border - follows mouse */}
             <div 
               className="absolute inset-0 rounded-full hero-gradient-border"
               style={{
@@ -175,6 +311,7 @@ const Hero = () => {
                 left: 0,
                 right: 0,
                 bottom: 0,
+                transition: 'background 0.3s ease',
               }}
             />
             {/* Main image container */}
