@@ -11,6 +11,10 @@ export const personalInfo = {
   profileImage: meImage
 };
 
+export const splashScreen = {
+  welcome: "Bienvenido a mi portfolio",
+};
+
 export const skills = [
   { name: "JavaScript", category: "Lenguaje", icon: "code" },
   { name: "TypeScript", category: "Lenguaje", icon: "code" },

@@ -79,8 +79,7 @@ const Hero = () => {
 
       // Pulse/glow effect
       setTimeout(() => {
-        anime({
-          targets: imageContainer,
+        anime(imageContainer, {
           scale: [1, 1.02, 1],
           duration: 2500,
           easing: 'easeInOutSine',

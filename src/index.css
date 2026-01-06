@@ -113,3 +113,77 @@ a, button {
   color: rgb(96, 165, 250);
 }
 
+/* Splash Screen Animations */
+.splash-logo {
+  animation: logoFloat 3s ease-in-out infinite;
+}
+
+.splash-logo-core {
+  will-change: transform;
+  transform-origin: center;
+}
+
+.splash-logo-ring-outer {
+  will-change: transform;
+  transform-origin: center;
+  border-style: solid;
+}
+
+.splash-logo-ring-middle {
+  will-change: transform, opacity;
+  transform-origin: center;
+  border-style: solid;
+}
+
+.splash-logo-particle {
+  will-change: transform, opacity;
+  filter: blur(1px);
+}
+
+@keyframes logoFloat {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-10px) scale(1.05);
+  }
+}
+
+.splash-letter {
+  will-change: transform, opacity;
+  transform-origin: center;
+}
+
+.splash-particle {
+  will-change: transform, opacity;
+  pointer-events: none;
+}
+
+.splash-shape {
+  will-change: transform, opacity;
+  pointer-events: none;
+}
+
+.splash-dot {
+  will-change: transform, opacity;
+}
+
+/* Smooth transitions for splash screen */
+.splash-screen-enter {
+  opacity: 0;
+}
+
+.splash-screen-enter-active {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.splash-screen-exit {
+  opacity: 1;
+}
+
+.splash-screen-exit-active {
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
