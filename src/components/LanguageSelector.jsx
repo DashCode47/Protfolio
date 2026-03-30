@@ -40,7 +40,7 @@ const LanguageSelector = () => {
             ? 'bg-primary text-white'
             : 'text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary'
         }`}
-        aria-label="Cambiar a Español"
+        aria-label="Switch to Spanish"
       >
         ES
       </button>

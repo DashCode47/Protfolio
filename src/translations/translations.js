@@ -38,7 +38,7 @@ export const translations = {
         'Fantasy Team': 'Aplicación web para gestión de equipos de fantasía deportiva. Desarrollada con React, permite crear y gestionar equipos virtuales con estadísticas en tiempo real.',
         'My Dormitory': 'Sistema de gestión para residencias estudiantiles. Aplicación móvil desarrollada con React Native para facilitar la administración de dormitorios universitarios.',
         'Web Agency': 'Sitio web corporativo para agencia de desarrollo. Diseño moderno y responsivo desarrollado con React, mostrando servicios y portfolio de proyectos.',
-        'Recipe App': 'Aplicación móvil para descubrir y guardar recetas de cocina. Desarrollada con React Native, incluye búsqueda, favoritos y categorización de recetas.',
+        'ChatAnalizer': 'ChatAnalizer es una plataforma de "Relationship Wrapped" enfocada en la privacidad, construida con React y FastAPI, que transforma los historiales de chat de WhatsApp en analíticas profundas impulsadas por IA e historias visuales cinemáticas.',
       },
     },
     experience: {
@@ -118,7 +118,7 @@ export const translations = {
         'Fantasy Team': 'Web application for managing fantasy sports teams. Developed with React, allows creating and managing virtual teams with real-time statistics.',
         'My Dormitory': 'Management system for student residences. Mobile application developed with React Native to facilitate university dormitory administration.',
         'Web Agency': 'Corporate website for development agency. Modern and responsive design developed with React, showcasing services and project portfolio.',
-        'Recipe App': 'Mobile application to discover and save cooking recipes. Developed with React Native, includes search, favorites, and recipe categorization.',
+        'ChatAnalizer': 'ChatAnalizer is a privacy-first "Relationship Wrapped" platform built with React and FastAPI that transforms WhatsApp chat histories into deep, AI-powered analytics and cinematic visual stories.',
       },
     },
     experience: {

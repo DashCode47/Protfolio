@@ -3,8 +3,8 @@ import meImage from '../assets/me.jpg';
 export const personalInfo = {
   name: "David Lozada",
   title: "Senior Consultant",
-  subtitle: "Desarrollador Full-Stack & Consultor Técnico",
-  description: "Consultor técnico dinámico y orientado a resultados con más de 5 años de experiencia entregando soluciones IT innovadoras en los sectores gubernamental y financiero. Experiencia comprobada en arquitectura de sistemas, desarrollo de software y gestión de proyectos, complementada con una sólida base en ingeniería de software y dominio en React y React Native. Comprometido con fomentar la colaboración en equipo y adaptarse a las necesidades cambiantes de los proyectos mientras impulsa iniciativas de mejora continua.",
+  subtitle: "Full-Stack Developer & Technical Consultant",
+  description: "Dynamic and results-driven technical consultant with over 5 years of experience delivering innovative IT solutions in the government and financial sectors. Proven expertise in systems architecture, software development, and project management, complemented by a strong foundation in software engineering with proficiency in React and React Native. Committed to fostering team collaboration and adapting to evolving project needs while consistently driving continuous improvement initiatives.",
   email: "daviddev47@hotmail.com",
   phone: "593 978724619",
   location: "Quito, Ecuador",
@@ -12,20 +12,20 @@ export const personalInfo = {
 };
 
 export const splashScreen = {
-  welcome: "Bienvenido a mi portfolio",
+  welcome: "Welcome to my portfolio",
 };
 
 export const skills = [
-  { name: "JavaScript", category: "Lenguaje", icon: "code" },
-  { name: "TypeScript", category: "Lenguaje", icon: "code" },
+  { name: "JavaScript", category: "Language", icon: "code" },
+  { name: "TypeScript", category: "Language", icon: "code" },
   { name: "React", category: "Framework", icon: "developer_mode" },
   { name: "React Native", category: "Framework", icon: "developer_mode" },
   { name: "Node.js", category: "Backend", icon: "dns" },
   { name: "Spring Boot", category: "Backend", icon: "dns" },
-  { name: "Java", category: "Lenguaje", icon: "code" },
+  { name: "Java", category: "Language", icon: "code" },
   { name: "Redux", category: "Framework", icon: "data_object" },
-  { name: "HTML5", category: "Lenguaje", icon: "code" },
-  { name: "CSS3", category: "Lenguaje", icon: "code" },
+  { name: "HTML5", category: "Language", icon: "code" },
+  { name: "CSS3", category: "Language", icon: "code" },
   { name: "Docker", category: "Herramientas", icon: "deployed_code" },
   { name: "Firebase", category: "Herramientas", icon: "cloud" },
   { name: "Git", category: "Herramientas", icon: "code" },
@@ -39,11 +39,29 @@ import IMG4 from '../assets/portfolio3.png';
 import IMG5 from '../assets/portfolio6.png';
 import IMG6 from '../assets/portfolio7.png';
 import IMG7 from '../assets/portfolio8.png';
+import IMG8 from '../assets/portfolio9.png';
 
 export const projects = [
   {
+    title: "Diners Club Web App",
+    description: "Complete web application for Diners Club card management. Responsive interface developed with React and Spring Boot, integrating internal APIs and external services.",
+    image: IMG7,
+    tags: ["React", "Spring Boot", "Node.js"],
+    liveUrl: "https://www.dinersclub.com.ec",
+    codeUrl: null,
+    privateRepo: true
+  },
+  {
+    title: "ChatAnalizer",
+    description: "ChatAnalizer is a privacy-first \"Relationship Wrapped\" platform built with React and FastAPI that transforms WhatsApp chat histories into deep, AI-powered analytics and cinematic visual stories.",
+    image: IMG8,
+    tags: ["Python", "TypeScript", "LLM"],
+    liveUrl: "https://chat-analizer-api.vercel.app/",
+    codeUrl: "https://github.com/DashCode47/ChatAnalizer"
+  },
+  {
     title: "Blu Benefits App by Diners Club",
-    description: "Aplicación móvil para gestión de beneficios y recompensas de tarjeta de crédito Diners Club. Desarrollo completo con React Native, integración de Firebase y herramientas de analítica.",
+    description: "Mobile application for managing Diners Club credit card benefits and rewards. Complete development with React Native, Firebase integration, and analytics tools.",
     image: IMG5,
     tags: ["React Native", "Firebase", "AppsFlyer"],
     liveUrl: "https://play.google.com/store/apps/details?id=com.appmundosocios&hl=es_EC",
@@ -52,33 +70,18 @@ export const projects = [
   },
   {
     title: "Blu de Diners Club",
-    description: "Aplicación móvil oficial de Diners Club para gestión de tarjetas y beneficios. Desarrollada con React Native y tecnologías modernas de desarrollo móvil.",
+    description: "Official Diners Club mobile application for card and benefits management. Developed with React Native and modern mobile development technologies.",
     image: IMG6,
     tags: ["React Native", "Firebase", "Redux"],
     liveUrl: "https://play.google.com/store/apps/details?id=com.blu.de.diners.club&hl=es_EC",
     codeUrl: null,
     privateRepo: true
   },
-  {
-    title: "Diners Club Web App",
-    description: "Aplicación web completa para gestión de tarjetas Diners Club. Interfaz responsiva desarrollada con React y Spring Boot, integrando APIs internas y servicios externos.",
-    image: IMG7,
-    tags: ["React", "Spring Boot", "Node.js"],
-    liveUrl: "https://www.dinersclub.com.ec",
-    codeUrl: null,
-    privateRepo: true
-  },
-  {
-    title: "Fantasy Team",
-    description: "Aplicación web para gestión de equipos de fantasía deportiva. Desarrollada con React, permite crear y gestionar equipos virtuales con estadísticas en tiempo real.",
-    image: IMG1,
-    tags: ["React", "JavaScript", "Vercel"],
-    liveUrl: "https://fantasy-team-kruger-star-km-dl.vercel.app",
-    codeUrl: "https://github.com/DashCode47/Fantasy-Team"
-  },
+
+
   {
     title: "My Dormitory",
-    description: "Sistema de gestión para residencias estudiantiles. Aplicación móvil desarrollada con React Native para facilitar la administración de dormitorios universitarios.",
+    description: "Management system for student residences. Mobile application developed with React Native to facilitate university dormitory administration.",
     image: IMG3,
     tags: ["React Native", "Firebase", "Mobile"],
     liveUrl: "https://drive.google.com/file/d/1zH8YT7ghaoreTfiLROg8bJQEbIIHV6TL/view?usp=share_link",
@@ -86,19 +89,20 @@ export const projects = [
   },
   {
     title: "Web Agency",
-    description: "Sitio web corporativo para agencia de desarrollo. Diseño moderno y responsivo desarrollado con React, mostrando servicios y portfolio de proyectos.",
+    description: "Corporate website for development agency. Modern and responsive design developed with React, showcasing services and project portfolio.",
     image: IMG2,
     tags: ["React", "CSS3", "Vercel"],
     liveUrl: "https://dash-code-agency.vercel.app",
     codeUrl: "https://github.com/DashCode47/DashCode-Agency"
   },
+
   {
-    title: "Recipe App",
-    description: "Aplicación móvil para descubrir y guardar recetas de cocina. Desarrollada con React Native, incluye búsqueda, favoritos y categorización de recetas.",
-    image: IMG4,
-    tags: ["React Native", "Mobile", "Firebase"],
-    liveUrl: "https://drive.google.com/file/d/1QHVe7lP8j1Sgb57cXI7ZiDJR_ObxbfFe/view?usp=share_link",
-    codeUrl: "https://github.com/DashCode47/Recipes-App"
+    title: "Fantasy Team",
+    description: "Web application for managing fantasy sports teams. Developed with React, allows creating and managing virtual teams with real-time statistics.",
+    image: IMG1,
+    tags: ["React", "JavaScript", "Vercel"],
+    liveUrl: "https://fantasy-team-kruger-star-km-dl.vercel.app",
+    codeUrl: "https://github.com/DashCode47/Fantasy-Team"
   }
 ];
 
@@ -109,14 +113,14 @@ export const experience = [
     title: "Technical Consultant",
     company: "Centro Hub",
     location: "Hybrid",
-    description: "Diseño y validación de soluciones tecnológicas para proyectos bancarios, enfocándome en la precisión del código y eficiencia de API. Analicé integraciones backend complejas usando Redux y Sagas para asegurar confiabilidad en el manejo de datos. Implementé mecanismos de seguimiento rigurosos usando librerías de analítica para evaluar el rendimiento de características y flujos de usuarios."
+    description: "Designed and validated technological solutions for banking projects, focusing on code accuracy and API efficiency. Analyzed complex backend integrations using Redux and Sagas to ensure reliability in data handling. Implemented rigorous tracking mechanisms using analytics libraries to evaluate feature performance and user flows."
   },
   {
     type: "experience",
     date: "09/2023 - 01/2025",
     title: "Software Engineer (React & Java Focus)",
     company: "Technisys",
-    description: "Ingeniería de módulos Core Banking, requiriendo comprensión profunda de algoritmos complejos y estructuras de datos seguras. Colaboré con equipos multifuncionales para validar requisitos técnicos, asegurando integración fluida entre APIs internas y servicios externos. Realicé revisiones de código y optimizaciones de rendimiento para asegurar altos estándares de rendimiento en software financiero."
+    description: "Engineered Core Banking modules, requiring deep understanding of complex algorithms and secure data structures. Collaborated with cross-functional teams to validate technical requirements, ensuring seamless integration between internal APIs and external services. Conducted code reviews and performance optimizations to ensure high-performance standards in financial software."
   },
   {
     type: "experience",
@@ -124,7 +128,7 @@ export const experience = [
     title: "Software Developer (Java & Web)",
     company: "Kruger",
     location: "Remote",
-    description: "Lideré el desarrollo y revisión de aplicaciones web complejas usando Java (Spring Boot) y JavaScript. Aseguré precisión y confiabilidad del código implementando herramientas de análisis automatizado como SonarLint y SonarQube, reduciendo drásticamente la deuda técnica. Participé en la definición de arquitecturas de API, enfocándome en la lógica de conexión y funcionalidad de servicios."
+    description: "Led the development and review of complex web applications using Java (Spring Boot) and JavaScript. Ensured code accuracy and reliability by implementing automated analysis tools like SonarLint and SonarQube, drastically reducing technical debt. Participated in the definition of API architectures, focusing on connection logic and service functionality."
   },
   {
     type: "experience",
@@ -132,7 +136,7 @@ export const experience = [
     title: "Software Developer",
     company: "Zaycev Design",
     location: "Remote",
-    description: "Desarrollé diversos productos SaaS, adaptándome rápidamente a diferentes bases de código y frameworks. Colaboré en la lógica de arquitectura móvil para iOS y Android, asegurando consistencia entre plataformas."
+    description: "Developed diverse SaaS products, adapting quickly to different codebases and frameworks. Collaborated on mobile architecture logic for iOS and Android, ensuring consistency across platforms."
   },
   {
     type: "education",
@@ -140,7 +144,7 @@ export const experience = [
     title: "Bachelor: Software Engineering",
     company: "Kazan Federal University",
     location: "Russia",
-    description: "Cursos relevantes: Algoritmos, Estructuras de Datos, Programación Orientada a Objetos (Java/JavaScript), Arquitectura de Sistemas."
+    description: "Relevant Coursework: Algorithms, Data Structures, Object-Oriented Programming (Java/JavaScript), System Architecture."
   }
 ];
 
