@@ -40,6 +40,7 @@ import IMG5 from '../assets/portfolio6.png';
 import IMG6 from '../assets/portfolio7.png';
 import IMG7 from '../assets/portfolio8.png';
 import IMG8 from '../assets/portfolio9.png';
+import IMG9 from '../assets/portfolio10.png';
 
 export const projects = [
   {
@@ -58,6 +59,14 @@ export const projects = [
     tags: ["Python", "TypeScript", "LLM"],
     liveUrl: "https://chat-analizer-api.vercel.app/",
     codeUrl: "https://github.com/DashCode47/ChatAnalizer"
+  },
+  {
+    title: "Fitzo",
+    description: "The app your members will love. Give your gym the app that controls capacity, routines, gamifies the experience, and retains members month after month.",
+    image: IMG9,
+    tags: ["React Native", "Supabase", "Postgres"],
+    liveUrl: "https://fitzo-one.vercel.app/",
+    codeUrl: "https://github.com/DashCode47/fitzo"
   },
   {
     title: "Blu Benefits App by Diners Club",
@@ -87,23 +96,7 @@ export const projects = [
     liveUrl: "https://drive.google.com/file/d/1zH8YT7ghaoreTfiLROg8bJQEbIIHV6TL/view?usp=share_link",
     codeUrl: "https://github.com/DashCode47/Kursobaya-"
   },
-  {
-    title: "Web Agency",
-    description: "Corporate website for development agency. Modern and responsive design developed with React, showcasing services and project portfolio.",
-    image: IMG2,
-    tags: ["React", "CSS3", "Vercel"],
-    liveUrl: "https://dash-code-agency.vercel.app",
-    codeUrl: "https://github.com/DashCode47/DashCode-Agency"
-  },
 
-  {
-    title: "Fantasy Team",
-    description: "Web application for managing fantasy sports teams. Developed with React, allows creating and managing virtual teams with real-time statistics.",
-    image: IMG1,
-    tags: ["React", "JavaScript", "Vercel"],
-    liveUrl: "https://fantasy-team-kruger-star-km-dl.vercel.app",
-    codeUrl: "https://github.com/DashCode47/Fantasy-Team"
-  }
 ];
 
 export const experience = [

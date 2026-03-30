@@ -35,10 +35,9 @@ export const translations = {
         'Blu Benefits App by Diners Club': 'Aplicación móvil para gestión de beneficios y recompensas de tarjeta de crédito Diners Club. Desarrollo completo con React Native, integración de Firebase y herramientas de analítica.',
         'Blu de Diners Club': 'Aplicación móvil oficial de Diners Club para gestión de tarjetas y beneficios. Desarrollada con React Native y tecnologías modernas de desarrollo móvil.',
         'Diners Club Web App': 'Aplicación web completa para gestión de tarjetas Diners Club. Interfaz responsiva desarrollada con React y Spring Boot, integrando APIs internas y servicios externos.',
-        'Fantasy Team': 'Aplicación web para gestión de equipos de fantasía deportiva. Desarrollada con React, permite crear y gestionar equipos virtuales con estadísticas en tiempo real.',
         'My Dormitory': 'Sistema de gestión para residencias estudiantiles. Aplicación móvil desarrollada con React Native para facilitar la administración de dormitorios universitarios.',
-        'Web Agency': 'Sitio web corporativo para agencia de desarrollo. Diseño moderno y responsivo desarrollado con React, mostrando servicios y portfolio de proyectos.',
         'ChatAnalizer': 'ChatAnalizer es una plataforma de "Relationship Wrapped" enfocada en la privacidad, construida con React y FastAPI, que transforma los historiales de chat de WhatsApp en analíticas profundas impulsadas por IA e historias visuales cinemáticas.',
+        'Fitzo': 'La app que tus miembros amarán. Dale a tu gimnasio la app que controla el aforo, rutinas, gamifica la experiencia y retiene miembros mes a mes.',
       },
     },
     experience: {
@@ -115,10 +114,9 @@ export const translations = {
         'Blu Benefits App by Diners Club': 'Mobile application for managing Diners Club credit card benefits and rewards. Complete development with React Native, Firebase integration, and analytics tools.',
         'Blu de Diners Club': 'Official Diners Club mobile application for card and benefits management. Developed with React Native and modern mobile development technologies.',
         'Diners Club Web App': 'Complete web application for Diners Club card management. Responsive interface developed with React and Spring Boot, integrating internal APIs and external services.',
-        'Fantasy Team': 'Web application for managing fantasy sports teams. Developed with React, allows creating and managing virtual teams with real-time statistics.',
         'My Dormitory': 'Management system for student residences. Mobile application developed with React Native to facilitate university dormitory administration.',
-        'Web Agency': 'Corporate website for development agency. Modern and responsive design developed with React, showcasing services and project portfolio.',
         'ChatAnalizer': 'ChatAnalizer is a privacy-first "Relationship Wrapped" platform built with React and FastAPI that transforms WhatsApp chat histories into deep, AI-powered analytics and cinematic visual stories.',
+        'Fitzo': 'The app your members will love. Give your gym the app that controls capacity, routines, gamifies the experience, and retains members month after month.',
       },
     },
     experience: {
