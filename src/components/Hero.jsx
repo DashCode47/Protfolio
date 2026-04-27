@@ -8,381 +8,251 @@ import cvPdf from '../assets/cv.pdf';
 const Hero = () => {
   const { language } = useLanguage();
   const t = translations[language];
-  const imageRef = useRef(null);
-  const titleRef = useRef(null);
-  const descriptionRef = useRef(null);
-  const buttonsRef = useRef(null);
-  const borderContainerRef = useRef(null);
-  const heroSectionRef = useRef(null);
+  const heroRef = useRef(null);
+  const imageWrapRef = useRef(null);
 
+  // Entrance sequence
   useEffect(() => {
-    // Animate profile image with stunning entrance
-    if (imageRef.current) {
-      const imageContainer = imageRef.current;
-      const image = imageContainer.querySelector('img');
-      const gradientBorder = imageContainer.parentElement?.querySelector('.hero-gradient-border');
-      
-      // Animate gradient border fade in
-      if (gradientBorder) {
-        anime(gradientBorder, {
-          opacity: [0, 0.6],
-          scale: [0.8, 1],
-          duration: 1000,
-          easing: 'easeOutExpo',
-          delay: 400,
-        });
-      }
+    if (!heroRef.current) return;
+    const el = heroRef.current;
 
-      // Initial entrance animation - dramatic and eye-catching
-      anime(imageContainer, {
+    anime(el.querySelector('.h-overline'), {
+      opacity: [0, 1],
+      translateY: [8, 0],
+      duration: 600,
+      easing: 'easeOutExpo',
+      delay: 300,
+    });
+
+    anime(el.querySelector('.h-name'), {
+      translateY: ['108%', '0%'],
+      duration: 1100,
+      easing: 'easeOutExpo',
+      delay: 500,
+    });
+
+    anime(el.querySelector('.h-rule'), {
+      scaleX: [0, 1],
+      duration: 900,
+      easing: 'easeOutExpo',
+      delay: 1000,
+    });
+
+    anime(el.querySelector('.h-subtitle'), {
+      opacity: [0, 1],
+      translateY: [10, 0],
+      duration: 700,
+      easing: 'easeOutExpo',
+      delay: 1050,
+    });
+
+    anime(el.querySelector('.h-description'), {
+      opacity: [0, 1],
+      translateY: [8, 0],
+      duration: 700,
+      easing: 'easeOutExpo',
+      delay: 1250,
+    });
+
+    const btns = el.querySelectorAll('.h-btn');
+    anime(btns, {
+      opacity: [0, 1],
+      translateY: [12, 0],
+      duration: 600,
+      easing: 'easeOutExpo',
+      delay: stagger(110, { start: 1450 }),
+    });
+
+    // Image entrance
+    if (imageWrapRef.current) {
+      anime(imageWrapRef.current, {
         opacity: [0, 1],
-        scale: [0.5, 1.1, 1],
-        rotate: [-15, 5, 0],
-        duration: 1200,
-        easing: 'easeOutBack',
-        delay: 200,
-      });
-
-      // Animate the image itself with a subtle zoom
-      if (image) {
-        anime(image, {
-          scale: [1.2, 1],
-          duration: 1500,
-          easing: 'easeOutExpo',
-          delay: 400,
-        });
-      }
-
-      // Continuous floating animation - smooth and mesmerizing
-      setTimeout(() => {
-        anime({
-          targets: imageContainer,
-          translateY: [0, -15],
-          duration: 3000,
-          easing: 'easeInOutSine',
-          direction: 'alternate',
-          loop: true,
-        });
-      }, 1500);
-
-      // Subtle rotation animation for depth
-      setTimeout(() => {
-        anime({
-          targets: imageContainer,
-          rotate: [0, 2, -2, 0],
-          duration: 4000,
-          easing: 'easeInOutSine',
-          direction: 'alternate',
-          loop: true,
-        });
-      }, 2000);
-
-      // Pulse/glow effect
-      setTimeout(() => {
-        anime(imageContainer, {
-          scale: [1, 1.02, 1],
-          duration: 2500,
-          easing: 'easeInOutSine',
-          direction: 'alternate',
-          loop: true,
-        });
-      }, 2500);
-    }
-
-    // Animate title with slide up and fade
-    if (titleRef.current) {
-      anime(titleRef.current, {
-        opacity: [0, 1],
-        translateY: [30, 0],
-        duration: 800,
+        scale: [0.92, 1],
+        duration: 1000,
         easing: 'easeOutExpo',
-        delay: 400,
-      });
-    }
-
-    // Animate description with stunning word-by-word reveal
-    if (descriptionRef.current) {
-      const description = descriptionRef.current;
-      
-      // Store original text to restore if needed
-      const originalText = t.hero.description;
-      
-      // Split text into words and wrap each word in a span
-      const words = originalText.split(' ');
-      description.innerHTML = words.map((word) => 
-        `<span class="hero-word" style="opacity: 0; display: inline-block;">${word}</span>`
-      ).join(' ');
-
-      // Animate each word with stagger - eye-catching reveal
-      const wordElements = description.querySelectorAll('.hero-word');
-      anime(wordElements, {
-        opacity: [0, 1],
-        translateY: [20, 0],
-        scale: [0.8, 1],
-        duration: 600,
-        easing: 'easeOutExpo',
-        delay: stagger(30, { start: 700 }),
+        delay: 700,
       });
 
-      // Add continuous subtle animation after initial reveal
+      // Single clean float — no competing animations
       setTimeout(() => {
-        // Subtle fade pulse effect on random words for dynamic feel
-        const randomWords = Array.from(wordElements).sort(() => 0.5 - Math.random()).slice(0, Math.floor(wordElements.length / 4));
-        
         anime({
-          targets: randomWords,
-          opacity: [1, 0.7, 1],
-          scale: [1, 1.05, 1],
-          duration: 2000,
+          targets: imageWrapRef.current,
+          translateY: [0, -14],
+          duration: 3800,
           easing: 'easeInOutSine',
           direction: 'alternate',
           loop: true,
-          delay: stagger(200),
         });
-      }, 2000);
-    }
-  }, [language, t.hero.description]);
-
-  // Mouse tracking effect for gradient border - Interactive and fluid (works even outside container)
-  useEffect(() => {
-    if (borderContainerRef.current && heroSectionRef.current) {
-      const borderContainer = borderContainerRef.current;
-      const gradientBorder = borderContainer.querySelector('.hero-gradient-border');
-      const section = heroSectionRef.current;
-      
-      if (gradientBorder) {
-        let currentX = 50;
-        let currentY = 50;
-        let targetX = 50;
-        let targetY = 50;
-        let animationId = null;
-        let isActive = false;
-
-        const updateGradient = () => {
-          // Smooth interpolation for fluid movement
-          currentX += (targetX - currentX) * 0.2;
-          currentY += (targetY - currentY) * 0.2;
-          
-          // Check if we need to continue animating
-          const diffX = Math.abs(targetX - currentX);
-          const diffY = Math.abs(targetY - currentY);
-          
-          // Calculate dynamic colors based on mouse position
-          const hue = (currentX / 100) * 360;
-          const saturation = 70 + (currentY / 100) * 20;
-          const lightness = 55 + Math.sin(currentX / 25) * 10;
-          
-          // Create vibrant gradient colors that change with position
-          const color1 = `hsl(${Math.round(hue)}, ${Math.round(saturation)}%, ${Math.round(lightness)}%)`;
-          const color2 = `hsl(${Math.round((hue + 90) % 360)}, ${Math.round(saturation + 15)}%, ${Math.round(lightness + 8)}%)`;
-          const color3 = `hsl(${Math.round((hue + 180) % 360)}, ${Math.round(saturation)}%, ${Math.round(lightness)}%)`;
-          const color4 = `hsl(${Math.round((hue + 270) % 360)}, ${Math.round(saturation - 10)}%, ${Math.round(lightness - 8)}%)`;
-          
-          // Calculate angle based on mouse position for dynamic rotation
-          const angle = Math.atan2(currentY - 50, currentX - 50) * (180 / Math.PI) + 90;
-          
-          // Update gradient directly for immediate visual feedback
-          const gradientString = `linear-gradient(${angle}deg, ${color1}, ${color2}, ${color3}, ${color4})`;
-          gradientBorder.style.background = gradientString;
-          gradientBorder.style.backgroundPosition = `${currentX}% ${currentY}%`;
-          
-          // Continue animation if still moving or active
-          if ((diffX > 0.5 || diffY > 0.5) && isActive) {
-            animationId = requestAnimationFrame(updateGradient);
-          } else {
-            animationId = null;
-          }
-        };
-
-        const handleMouseMove = (e) => {
-          const borderRect = borderContainer.getBoundingClientRect();
-          const sectionRect = section.getBoundingClientRect();
-          
-          // Calculate mouse position relative to border container (even if outside)
-          const mouseX = e.clientX - borderRect.left;
-          const mouseY = e.clientY - borderRect.top;
-          
-          // Calculate position as percentage (0-100), allow values outside 0-100 for extended effect
-          let calculatedX = (mouseX / borderRect.width) * 100;
-          let calculatedY = (mouseY / borderRect.height) * 100;
-          
-          // Check if mouse is within section bounds
-          const isInSection = 
-            e.clientX >= sectionRect.left && 
-            e.clientX <= sectionRect.right &&
-            e.clientY >= sectionRect.top && 
-            e.clientY <= sectionRect.bottom;
-          
-          if (isInSection) {
-            isActive = true;
-            // Map to 0-100 range but allow some extension beyond bounds for smoother effect
-            targetX = Math.max(-20, Math.min(120, calculatedX));
-            targetY = Math.max(-20, Math.min(120, calculatedY));
-            
-            // Start animation loop if not already running
-            if (!animationId) {
-              updateGradient();
-            }
-          }
-        };
-
-        const handleMouseLeave = () => {
-          isActive = false;
-          // Smoothly return to center and default colors
-          targetX = 50;
-          targetY = 50;
-          
-          // Continue animation to return to center
-          if (!animationId) {
-            const returnToCenter = () => {
-              currentX += (targetX - currentX) * 0.1;
-              currentY += (targetY - currentY) * 0.1;
-              
-              const diffX = Math.abs(targetX - currentX);
-              const diffY = Math.abs(targetY - currentY);
-              
-              // Gradually return to default gradient
-              const defaultGradient = 'linear-gradient(45deg, #3b82f6, #8b5cf6, #ec4899, #f59e0b, #3b82f6)';
-              
-              if (diffX > 1 || diffY > 1) {
-                gradientBorder.style.background = defaultGradient;
-                gradientBorder.style.backgroundPosition = `${currentX}% ${currentY}%`;
-                animationId = requestAnimationFrame(returnToCenter);
-              } else {
-                gradientBorder.style.background = defaultGradient;
-                gradientBorder.style.backgroundPosition = '50% 50%';
-                animationId = null;
-              }
-            };
-            returnToCenter();
-          }
-        };
-
-        // Listen to mouse movement on the entire section, not just the container
-        section.addEventListener('mousemove', handleMouseMove);
-        section.addEventListener('mouseleave', handleMouseLeave);
-
-        return () => {
-          section.removeEventListener('mousemove', handleMouseMove);
-          section.removeEventListener('mouseleave', handleMouseLeave);
-          if (animationId) {
-            cancelAnimationFrame(animationId);
-          }
-        };
-      }
+      }, 1800);
     }
   }, []);
 
-  // Animate buttons with stagger
+  // Subtle mouse-parallax on the image glow
   useEffect(() => {
-    if (buttonsRef.current) {
-      const buttons = buttonsRef.current.children;
-      anime(buttons, {
-        opacity: [0, 1],
-        translateY: [20, 0],
-        scale: [0.9, 1],
-        duration: 600,
-        easing: 'easeOutExpo',
-        delay: stagger(100, { start: 800 }),
-      });
-    }
+    const img = imageWrapRef.current;
+    if (!img) return;
+
+    const ring = img.querySelector('.img-ring');
+
+    const onMove = (e) => {
+      const { left, top, width, height } = img.getBoundingClientRect();
+      const x = ((e.clientX - left) / width - 0.5) * 2;   // -1 to 1
+      const y = ((e.clientY - top) / height - 0.5) * 2;
+      const angle = Math.atan2(y, x) * (180 / Math.PI);
+      if (ring) {
+        ring.style.background = `conic-gradient(from ${angle}deg,
+          rgba(139,92,246,0.8),
+          rgba(99,102,241,0.5),
+          rgba(59,130,246,0.3),
+          rgba(139,92,246,0.1),
+          rgba(139,92,246,0.8))`;
+      }
+    };
+
+    const onLeave = () => {
+      if (ring) {
+        ring.style.background = `conic-gradient(from 200deg,
+          rgba(139,92,246,0.7),
+          rgba(99,102,241,0.4),
+          rgba(59,130,246,0.25),
+          rgba(139,92,246,0.1),
+          rgba(139,92,246,0.7))`;
+      }
+    };
+
+    img.addEventListener('mousemove', onMove);
+    img.addEventListener('mouseleave', onLeave);
+    return () => {
+      img.removeEventListener('mousemove', onMove);
+      img.removeEventListener('mouseleave', onLeave);
+    };
   }, []);
 
   return (
-    <section ref={heroSectionRef} className="@container pt-10" id="inicio">
-      <div className="flex flex-col gap-6 px-4 py-10 @[480px]:gap-8 @[864px]:flex-row-reverse @[864px]:items-center">
-        <div className="w-full max-w-xs mx-auto @[864px]:w-1/3">
-          <div 
-            ref={borderContainerRef}
-            className="relative inline-block w-full" 
-            style={{ padding: '4px', cursor: 'pointer' }}
-          >
-            {/* Rotating gradient border - follows mouse */}
-            <div 
-              className="absolute inset-0 rounded-full hero-gradient-border"
-              style={{
-                background: 'linear-gradient(45deg, #3b82f6, #8b5cf6, #ec4899, #f59e0b, #3b82f6)',
-                backgroundSize: '400% 400%',
-                borderRadius: '50%',
-                filter: 'blur(2px)',
-                zIndex: 0,
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                transition: 'background 0.3s ease',
-              }}
-            />
-            {/* Main image container */}
-            <div 
-              ref={imageRef}
-              className="relative aspect-square bg-center bg-no-repeat bg-cover rounded-full overflow-hidden opacity-0 hero-image-container"
-              data-alt="Foto de perfil profesional de David Lozada"
-              style={{
-                boxShadow: '0 0 30px rgba(59, 130, 246, 0.3), 0 0 60px rgba(139, 92, 246, 0.2)',
-                position: 'relative',
-                zIndex: 1,
-              }}
-            >
-              {/* Shimmer overlay */}
-              <div 
-                className="absolute inset-0 hero-shimmer"
-                style={{
-                  background: 'linear-gradient(110deg, transparent 40%, rgba(255, 255, 255, 0.3) 50%, transparent 60%)',
-                  backgroundSize: '200% 100%',
-                  pointerEvents: 'none',
-                  zIndex: 2,
-                  borderRadius: '50%',
-                }}
-              />
-              <img 
-                src={personalInfo.profileImage} 
-                alt="David Lozada"
-                className="w-full h-full object-cover relative"
-                style={{ objectPosition: 'center calc(50% + 70px)', zIndex: 1 }}
-              />
-            </div>
+    <section ref={heroRef} id="inicio" className="@container">
+      <div className="max-w-5xl mx-auto flex flex-col gap-10 px-4 md:px-6 py-16 md:py-24 @[864px]:flex-row @[864px]:items-center @[864px]:gap-16">
+
+        {/* ── Text ── */}
+        <div className="flex flex-col gap-5 text-center @[864px]:text-left @[864px]:flex-1">
+
+          {/* Overline */}
+          <div className="h-overline opacity-0 flex items-center gap-2 justify-center @[864px]:justify-start">
+            <span className="w-1.5 h-1.5 rounded-full bg-violet-500 flex-shrink-0" />
+            <span className="text-[0.62rem] tracking-[0.32em] uppercase text-violet-400 font-light">
+              {personalInfo.title}
+            </span>
           </div>
-        </div>
-        <div className="flex flex-col gap-6 text-center @[864px]:text-left @[864px]:w-2/3 @[480px]:gap-8">
-          <div className="flex flex-col gap-2">
-            <h1 
-              ref={titleRef}
-              className="text-gray-900 dark:text-white text-4xl font-black leading-tight tracking-[-0.033em] @[480px]:text-5xl @[480px]:font-black @[480px]:leading-tight @[480px]:tracking-[-0.033em] opacity-0"
+
+          {/* Name — clip reveal */}
+          <div className="overflow-hidden leading-none">
+            <h1
+              className="h-name font-extralight text-gray-900 dark:text-white uppercase"
+              style={{
+                fontSize: 'clamp(2.6rem, 7.5vw, 5rem)',
+                letterSpacing: '0.09em',
+                lineHeight: 1.05,
+                transform: 'translateY(110%)',
+              }}
             >
-              {t.hero.subtitle}
+              {personalInfo.name}
             </h1>
-            <h2 
-              ref={descriptionRef}
-              className="text-gray-600 dark:text-gray-400 text-base font-normal leading-normal @[480px]:text-lg @[480px]:font-normal @[480px]:leading-relaxed hero-description"
+          </div>
+
+          {/* Accent rule */}
+          <div
+            className="h-rule w-14 h-px self-center @[864px]:self-start"
+            style={{
+              background:
+                'linear-gradient(90deg, rgba(139,92,246,0.9), rgba(99,102,241,0.5), transparent)',
+              transformOrigin: 'left center',
+              transform: 'scaleX(0)',
+            }}
+          />
+
+          {/* Subtitle */}
+          <p className="h-subtitle opacity-0 text-base md:text-lg font-light text-gray-600 dark:text-gray-400">
+            {t.hero.subtitle}
+          </p>
+
+          {/* Description */}
+          <p className="h-description opacity-0 text-sm text-gray-500 dark:text-gray-500 leading-relaxed max-w-lg mx-auto @[864px]:mx-0">
+            {t.hero.description}
+          </p>
+
+          {/* CTAs */}
+          <div className="flex flex-col sm:flex-row gap-3 mt-1 mx-auto @[864px]:mx-0">
+            <a
+              href="#contacto"
+              className="h-btn opacity-0 inline-flex items-center justify-center gap-2 h-11 px-7 rounded text-sm font-medium tracking-[0.04em] text-white transition-all duration-200 hover:-translate-y-px hover:brightness-110 active:translate-y-0"
               style={{
-                textShadow: '0 0 0px rgba(59, 130, 246, 0)',
+                background: 'linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%)',
+                boxShadow: '0 4px 24px rgba(124,58,237,0.3)',
               }}
             >
-              {t.hero.description}
-            </h2>
-          </div>
-          <div ref={buttonsRef} className="flex flex-col sm:flex-row gap-3 mx-auto @[864px]:mx-0">
-            <a 
-              className="flex min-w-[84px] max-w-xs cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 @[480px]:h-12 @[480px]:px-5 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base @[480px]:font-bold @[480px]:leading-normal @[480px]:tracking-[0.015em] opacity-0 hover:scale-105 transition-transform" 
-              href="#contacto"
-            >
-              <span className="truncate">{t.hero.contactButton}</span>
+              {t.hero.contactButton}
             </a>
-            <a 
-              className="flex min-w-[84px] max-w-xs cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg h-10 px-4 @[480px]:h-12 @[480px]:px-5 border-2 border-primary text-primary bg-transparent hover:bg-primary hover:text-white text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base @[480px]:font-bold @[480px]:leading-normal @[480px]:tracking-[0.015em] transition-colors opacity-0 hover:scale-105 transition-transform" 
+            <a
               href={cvPdf}
               download="David-Lozada-CV.pdf"
+              className="h-btn opacity-0 inline-flex items-center justify-center gap-2 h-11 px-7 rounded text-sm font-medium tracking-[0.04em] text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700/80 hover:border-violet-500/60 hover:text-violet-600 dark:hover:text-violet-400 transition-all duration-200 hover:-translate-y-px active:translate-y-0"
             >
-              <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>download</span>
-              <span className="truncate">{t.hero.downloadCV}</span>
+              <span className="material-symbols-outlined" style={{ fontSize: '15px' }}>download</span>
+              {t.hero.downloadCV}
             </a>
           </div>
         </div>
+
+        {/* ── Image ── */}
+        <div className="flex justify-center flex-shrink-0 @[864px]:justify-end">
+          <div
+            ref={imageWrapRef}
+            className="relative opacity-0"
+            style={{ width: 'clamp(200px, 28vw, 288px)', height: 'clamp(200px, 28vw, 288px)' }}
+          >
+            {/* Gradient conic ring — reacts to mouse */}
+            <div
+              className="img-ring absolute inset-0 rounded-full p-[2px] transition-[background] duration-500"
+              style={{
+                background: `conic-gradient(from 200deg,
+                  rgba(139,92,246,0.7),
+                  rgba(99,102,241,0.4),
+                  rgba(59,130,246,0.25),
+                  rgba(139,92,246,0.1),
+                  rgba(139,92,246,0.7))`,
+              }}
+            >
+              {/* Blurred outer glow */}
+              <div
+                className="absolute inset-0 rounded-full"
+                style={{
+                  background: 'inherit',
+                  filter: 'blur(10px)',
+                  opacity: 0.5,
+                  transform: 'scale(1.05)',
+                }}
+              />
+              {/* Solid bg mask so ring stays crisp */}
+              <div className="relative w-full h-full rounded-full overflow-hidden bg-background-light dark:bg-background-dark">
+                <img
+                  src={personalInfo.profileImage}
+                  alt={personalInfo.name}
+                  className="w-full h-full object-cover"
+                  style={{ objectPosition: 'center calc(50% + 70px)' }}
+                />
+              </div>
+            </div>
+
+            {/* Outer faint ring */}
+            <div
+              className="absolute rounded-full border border-violet-500/10 dark:border-violet-500/15 pointer-events-none"
+              style={{ inset: '-10px' }}
+            />
+          </div>
+        </div>
+
       </div>
     </section>
   );
 };
 
 export default Hero;
-
